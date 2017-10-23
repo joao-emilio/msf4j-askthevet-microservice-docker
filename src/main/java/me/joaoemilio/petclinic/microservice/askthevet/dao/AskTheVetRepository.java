@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -75,8 +76,14 @@ public class AskTheVetRepository {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Question> cq = cb.createQuery(Question.class);
         Root<Question> rootEntry = cq.from(Question.class);
-        CriteriaQuery<Question> all = cq.select(rootEntry);
+        CriteriaQuery<Question> all = cq.select(rootEntry).where(  );
         TypedQuery<Question> allQuery = getEntityManager().createQuery(all);
         return allQuery.getResultList();
+    }
+
+    public List<Question> findAllByVetId(Long id) {
+        Query query = getEntityManager().createQuery( "SELECT q FROM Question q where q.vetId = :id" ).setParameter( "id", id);
+        List<Question> list = query.getResultList();
+        return list;
     }
 }

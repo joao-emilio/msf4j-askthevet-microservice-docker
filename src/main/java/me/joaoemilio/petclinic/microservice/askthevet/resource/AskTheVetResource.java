@@ -59,4 +59,16 @@ public class AskTheVetResource {
         List<Question> list = repository.findAll();
         return Response.status(Response.Status.ACCEPTED).entity(list).build();
     }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVetById(@PathParam("id") long id) {
+        System.out.println("ID:" + id );
+        List<Question> questions = repository.findAllByVetId( id );
+        System.out.println("depois do find" );
+
+        return Response.status(Response.Status.ACCEPTED).entity(questions).build();
+    }
+
 }
