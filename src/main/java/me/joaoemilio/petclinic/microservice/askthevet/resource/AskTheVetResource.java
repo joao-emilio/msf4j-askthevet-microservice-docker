@@ -39,6 +39,12 @@ public class AskTheVetResource {
     @Autowired
     private AskTheVetRepository repository;
 
+    @GET
+    @Path("/health")
+    public Response healthcheck() {
+        return Response.status(Response.Status.ACCEPTED).entity("OK").build();
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addQuestion(Question model) {
